@@ -2,4 +2,6 @@
 <resources>
     <dimen name="regular">8dp</dimen>
     <dimen name="large">16dp</dimen>
+    <dimen name="extra_large">24dp</dimen>
+    <dimen name="text_medium">16sp</dimen>
 </resources>

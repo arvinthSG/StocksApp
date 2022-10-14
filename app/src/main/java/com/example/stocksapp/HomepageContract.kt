@@ -15,12 +15,15 @@ interface HomepageContract {
     }
 
     interface Model {
+        fun init(onModelResponseListener: OnModelResponseListener)
+        fun getMalformedPortfolio()
+        fun getEmptyPortfolio()
         fun getPortfolio()
         fun getUserName(): String
-        fun setListener(onModelResponseListener: OnModelResponseListener)
 
         interface OnModelResponseListener {
             fun onPortfolioResponse(listOfStocks: List<Stock>)
+            fun onPortfolioResponseError()
         }
     }
 }

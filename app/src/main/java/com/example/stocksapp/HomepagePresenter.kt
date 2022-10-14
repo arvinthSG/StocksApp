@@ -7,7 +7,7 @@ class HomepagePresenter(
     private val model: HomepageContract.Model
 ) : HomepageContract.Presenter, HomepageContract.Model.OnModelResponseListener {
     override fun onViewLoaded() {
-        model.setListener(this)
+        model.init(this)
         updateUserName()
         model.getPortfolio()
     }
@@ -15,6 +15,11 @@ class HomepagePresenter(
     //@TODO - rename
     override fun onPortfolioResponse(listOfStocks: List<Stock>) {
         homepageActivity.updatePortfolio(listOfStocks)
+    }
+
+    //@TODO - update error view
+    override fun onPortfolioResponseError() {
+        homepageActivity.updateWelcomeMessage("error")
     }
 
 

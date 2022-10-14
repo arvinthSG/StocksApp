@@ -35,10 +35,13 @@ class HomepageActivity : AppCompatActivity(), HomepageContract.View {
     }
 
     override fun updatePortfolio(listOfStocks: List<Stock>) {
-        rvPortfolioList.apply {
-            setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context,2)
-            adapter = PortfolioListAdapter(listOfStocks)
+        runOnUiThread {
+            rvPortfolioList.apply {
+                setHasFixedSize(true)
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = PortfolioListAdapter(listOfStocks)
+            }
         }
+
     }
 }
