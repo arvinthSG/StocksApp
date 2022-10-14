@@ -4,4 +4,5 @@
     <dimen name="large">16dp</dimen>
     <dimen name="extra_large">24dp</dimen>
     <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">22sp</dimen>
 </resources>

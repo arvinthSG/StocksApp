@@ -1,28 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="@dimen/large"
+    android:layout_margin="@dimen/large"
+    android:layout_marginBottom="@dimen/extra_large"
     android:background="@color/home_bg"
-    android:layout_margin="@dimen/large">
+    android:elevation="@dimen/large">
 
     <TextView
         android:id="@+id/tv_stock_ticker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large"
+        android:layout_margin="@dimen/regular"
         android:textColor="@color/home_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="SPY" />
 
     <TextView
         android:id="@+id/tv_stock_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large"
+        android:layout_margin="@dimen/regular"
+        android:layout_marginEnd="@dimen/extra_large"
         android:textColor="@color/home_text"
-        app:layout_constraintTop_toBottomOf="@id/tv_stock_ticker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_goneMarginTop="@dimen/regular" />
+        app:layout_constraintTop_toBottomOf="@id/tv_currency"
+        tools:text="vanguard vti index funds" />
+
+    <TextView
+        android:id="@+id/tv_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/regular"
+        android:textColor="@color/home_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_currency_price"
+        tools:text="USD" />
+
+    <TextView
+        android:id="@+id/tv_currency_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/regular"
+        android:textColor="@color/home_text"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="$400" />
+
+    <TextView
+        android:id="@+id/tv_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/regular"
+        android:textColor="@color/home_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_name"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/tv_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/regular"
+        android:textColor="@color/home_text"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_quantity"
+        tools:text="11:00" />
 </androidx.constraintlayout.widget.ConstraintLayout>
