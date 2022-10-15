@@ -13,6 +13,10 @@ class PortfolioPagePresenter(
         model.getPortfolio()
     }
 
+    override fun reloadPortfolio() {
+        model.getPortfolio()
+    }
+
     //@TODO - rename
     override fun onPortfolioResponse(listOfStocks: List<Stock>) {
         portfolioPageView.updatePortfolio(listOfStocks)

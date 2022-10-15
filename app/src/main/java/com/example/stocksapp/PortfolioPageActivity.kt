@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.stocksapp.Adapter.PortfolioListAdapter
 import com.example.stocksapp.Data.Stock
 
@@ -15,6 +16,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var rvPortfolioList: RecyclerView
     private lateinit var presenter: PortfolioPagePresenter
     private lateinit var pbLoadingIcon: ProgressBar
+    private lateinit var srlReloadList: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,15 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
         rvPortfolioList = findViewById(R.id.rv_portfolio_list)
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
         pbLoadingIcon = findViewById(R.id.pb_loading_icon)
+        srlReloadList = findViewById(R.id.srl_reload_list)
+        srlReloadList.setOnRefreshListener {
+            srlReloadList.isRefreshing = false
+            rvPortfolioList.removeAllViewsInLayout()
+            pbLoadingIcon.visibility = View.VISIBLE
+            presenter.reloadPortfolio()
+        }
     }
+
 
     override fun onResume() {
         super.onResume()
