@@ -3,6 +3,8 @@
     <dimen name="regular">8dp</dimen>
     <dimen name="large">16dp</dimen>
     <dimen name="extra_large">24dp</dimen>
+    <dimen name="text_small">10sp</dimen>
     <dimen name="text_medium">16sp</dimen>
-    <dimen name="text_large">22sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_extra_large">24sp</dimen>
 </resources>

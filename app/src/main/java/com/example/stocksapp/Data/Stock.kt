@@ -1,7 +1,6 @@
 package com.example.stocksapp.Data
 
 import com.google.gson.annotations.SerializedName
-import java.util.Currency
 
 data class Stock(
 

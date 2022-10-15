@@ -1,28 +1,33 @@
 package com.example.stocksapp
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stocksapp.Adapter.PortfolioListAdapter
 import com.example.stocksapp.Data.Stock
 
-class HomepageActivity : AppCompatActivity(), HomepageContract.View {
+class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var tvWelcomeUser: TextView
     private lateinit var rvPortfolioList: RecyclerView
-    private lateinit var presenter: HomepagePresenter
+    private lateinit var presenter: PortfolioPagePresenter
+    private lateinit var pbLoadingIcon: ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvWelcomeUser = findViewById(R.id.tv_welcome_user)
         rvPortfolioList = findViewById(R.id.rv_portfolio_list)
-        presenter = HomepagePresenter(this, HomepageModel())
+        presenter = PortfolioPagePresenter(this, PortfolioPageModel())
+        pbLoadingIcon = findViewById(R.id.pb_loading_icon)
     }
 
     override fun onResume() {
         super.onResume()
+        pbLoadingIcon.visibility = View.VISIBLE
         presenter.onViewLoaded()
     }
 
@@ -36,12 +41,17 @@ class HomepageActivity : AppCompatActivity(), HomepageContract.View {
 
     override fun updatePortfolio(listOfStocks: List<Stock>) {
         runOnUiThread {
+            pbLoadingIcon.visibility = View.GONE
+            Thread.sleep(1000) // Added to show the loading icon
             rvPortfolioList.apply {
                 setHasFixedSize(true)
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = PortfolioListAdapter(listOfStocks)
             }
         }
+    }
 
+    companion object {
+        private const val TAG = "HomepageActivity"
     }
 }

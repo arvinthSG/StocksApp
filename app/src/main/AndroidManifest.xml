@@ -14,7 +14,7 @@
         android:theme="@style/Theme.StocksApp"
         tools:targetApi="31">
         <activity
-            android:name=".HomepageActivity"
+            android:name=".PortfolioPageActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

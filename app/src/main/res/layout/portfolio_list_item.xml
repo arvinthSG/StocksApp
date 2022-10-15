@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/large"
     android:layout_marginBottom="@dimen/extra_large"
     android:background="@color/home_bg"
-    android:elevation="@dimen/large">
+    android:elevation="@dimen/extra_large">
 
     <TextView
         android:id="@+id/tv_stock_ticker"
@@ -28,18 +28,8 @@
         android:layout_marginEnd="@dimen/extra_large"
         android:textColor="@color/home_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_currency"
-        tools:text="vanguard vti index funds" />
-
-    <TextView
-        android:id="@+id/tv_currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/regular"
-        android:textColor="@color/home_text"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_currency_price"
-        tools:text="USD" />
+        tools:text="vanguard vti index funds" />
 
     <TextView
         android:id="@+id/tv_currency_price"
@@ -72,4 +62,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_quantity"
         tools:text="11:00" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_quantity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

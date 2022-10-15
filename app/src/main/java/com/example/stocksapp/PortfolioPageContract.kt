@@ -2,7 +2,7 @@ package com.example.stocksapp
 
 import com.example.stocksapp.Data.Stock
 
-interface HomepageContract {
+interface PortfolioPageContract {
     interface View {
         fun loadView()
         fun updateWelcomeMessage(userName: String)
@@ -11,7 +11,6 @@ interface HomepageContract {
 
     interface Presenter {
         fun onViewLoaded()
-
     }
 
     interface Model {

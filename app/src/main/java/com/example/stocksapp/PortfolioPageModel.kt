@@ -1,15 +1,21 @@
 package com.example.stocksapp
 
-import com.example.stocksapp.HomepageContract.Model.OnModelResponseListener
+import com.example.stocksapp.PortfolioPageContract.Model.OnModelResponseListener
 import com.example.stocksapp.Network.GetStocksService
 import com.example.stocksapp.Network.StocksAppNetworkInstance
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 
-class HomepageModel : HomepageContract.Model {
+class PortfolioPageModel : PortfolioPageContract.Model {
     private lateinit var onModelResponseListener: OnModelResponseListener
     private lateinit var service: Retrofit
     private lateinit var getStocksService: GetStocksService
+
+    override fun init(onModelResponseListener: OnModelResponseListener) {
+        service = StocksAppNetworkInstance.provideNetworkInstance()
+        getStocksService = service.create(GetStocksService::class.java)
+        this.onModelResponseListener = onModelResponseListener
+    }
 
     override fun getPortfolio() {
         getStocksService.getPortfolio().subscribeOn(Schedulers.io()).subscribe({ it ->
@@ -20,12 +26,6 @@ class HomepageModel : HomepageContract.Model {
             onModelResponseListener.onPortfolioResponseError()
         }
         )
-    }
-
-    override fun init(onModelResponseListener: OnModelResponseListener) {
-        service = StocksAppNetworkInstance.provideNetworkInstance()
-        getStocksService = service.create(GetStocksService::class.java)
-        this.onModelResponseListener = onModelResponseListener
     }
 
     override fun getMalformedPortfolio() {
@@ -53,10 +53,11 @@ class HomepageModel : HomepageContract.Model {
     }
 
     override fun getUserName(): String {
-        return "Arvinth"
+        return USERNAME
     }
 
     companion object {
-
+        private const val TAG = "HomepageModel"
+        private const val USERNAME = "Arvinthan"
     }
 }

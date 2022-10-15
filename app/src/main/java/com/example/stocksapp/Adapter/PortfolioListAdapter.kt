@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stocksapp.Data.Stock
 import com.example.stocksapp.R
+import java.util.Currency
 
 class PortfolioListAdapter(private val data: List<Stock>) :
     RecyclerView.Adapter<PortfolioListAdapter.ViewHolder>() {
@@ -19,7 +20,6 @@ class PortfolioListAdapter(private val data: List<Stock>) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvStockTicker: TextView = itemView.findViewById(R.id.tv_stock_ticker)
         val tvStockName: TextView = itemView.findViewById(R.id.tv_stock_name)
-        val tvCurrency: TextView = itemView.findViewById(R.id.tv_currency)
         val tvPrice: TextView = itemView.findViewById(R.id.tv_currency_price)
         val tvQuantity: TextView = itemView.findViewById(R.id.tv_quantity)
     }
@@ -36,12 +36,13 @@ class PortfolioListAdapter(private val data: List<Stock>) :
         val stockItem = data[position]
         viewHolder.tvStockTicker.text = stockItem.ticker
         viewHolder.tvStockName.text = stockItem.name
-        if (stockItem.currency.isNullOrEmpty()) {
-            viewHolder.tvCurrency.visibility = GONE
-        } else {
-            viewHolder.tvCurrency.text = stockItem.currency
+        var currencySymbol = ""
+        if (stockItem.currency.isNotEmpty()) {
+            currencySymbol = Currency.getInstance(stockItem.currency).symbol
         }
-        viewHolder.tvPrice.text = (stockItem.currentPriceCents / 100.00).toString()
+        "$currencySymbol${(stockItem.currentPriceCents / 100.00)}".also {
+            viewHolder.tvPrice.text = it
+        }
         if (stockItem.quantity == null) {
             viewHolder.tvQuantity.visibility = GONE
         } else {
