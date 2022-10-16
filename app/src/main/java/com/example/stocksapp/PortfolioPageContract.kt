@@ -7,6 +7,7 @@ interface PortfolioPageContract {
         fun loadView()
         fun updateWelcomeMessage(userName: String)
         fun updatePortfolio(listOfStocks: List<Stock>)
+        fun showErrorMessage()
     }
 
     interface Presenter {

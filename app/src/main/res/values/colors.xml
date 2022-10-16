@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="home_bg">#009088</color>
     <color name="home_text">#FFFFFFFF</color>
+    <color name="error">#DD0000</color>
 </resources>

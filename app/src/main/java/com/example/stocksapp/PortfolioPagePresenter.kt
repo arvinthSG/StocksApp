@@ -20,9 +20,8 @@ class PortfolioPagePresenter(
 
     //@TODO - update error view
     override fun onPortfolioResponseError() {
-        portfolioPageView.updateWelcomeMessage("error")
+        portfolioPageView.showErrorMessage()
     }
-
 
     private fun updateUserName() {
         val userName = model.getUserName()

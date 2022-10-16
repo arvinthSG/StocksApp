@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stocksapp.Adapter.PortfolioListAdapter
@@ -15,6 +16,8 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var rvPortfolioList: RecyclerView
     private lateinit var presenter: PortfolioPagePresenter
     private lateinit var pbLoadingIcon: ProgressBar
+    private lateinit var groupPortfolioViews: Group
+    private lateinit var tvErrorMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,9 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
         rvPortfolioList = findViewById(R.id.rv_portfolio_list)
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
         pbLoadingIcon = findViewById(R.id.pb_loading_icon)
+        groupPortfolioViews = findViewById(R.id.group_portfolio)
+        tvErrorMessage =
+            findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
     }
 
     override fun onResume() {
@@ -41,6 +47,8 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun updatePortfolio(listOfStocks: List<Stock>) {
         runOnUiThread {
+            tvErrorMessage.visibility = View.GONE
+            groupPortfolioViews.visibility = View.VISIBLE
             pbLoadingIcon.visibility = View.GONE
             Thread.sleep(1000) // Added to show the loading icon
             rvPortfolioList.apply {
@@ -49,6 +57,11 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
                 adapter = PortfolioListAdapter(listOfStocks)
             }
         }
+    }
+
+    override fun showErrorMessage() {
+        groupPortfolioViews.visibility = View.GONE
+        tvErrorMessage.visibility = View.VISIBLE
     }
 
     companion object {
