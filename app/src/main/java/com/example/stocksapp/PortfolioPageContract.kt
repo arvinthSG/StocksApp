@@ -4,7 +4,6 @@ import com.example.stocksapp.Data.Stock
 
 interface PortfolioPageContract {
     interface View {
-        fun loadView()
         fun updateWelcomeMessage(userName: String)
         fun updatePortfolio(listOfStocks: List<Stock>)
         fun showErrorMessage()
@@ -12,6 +11,7 @@ interface PortfolioPageContract {
 
     interface Presenter {
         fun onViewLoaded()
+        fun onViewDetached()
     }
 
     interface Model {
@@ -20,6 +20,7 @@ interface PortfolioPageContract {
         fun getEmptyPortfolio()
         fun getPortfolio()
         fun getUserName(): String
+        fun destroy()
 
         interface OnModelResponseListener {
             fun onPortfolioResponse(listOfStocks: List<Stock>)

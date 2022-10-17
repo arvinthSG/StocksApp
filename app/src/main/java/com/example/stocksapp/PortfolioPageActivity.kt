@@ -1,6 +1,7 @@
 package com.example.stocksapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -21,6 +22,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate()")
         setContentView(R.layout.activity_main)
         tvWelcomeUser = findViewById(R.id.tv_welcome_user)
         rvPortfolioList = findViewById(R.id.rv_portfolio_list)
@@ -33,15 +35,19 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume()")
         pbLoadingIcon.visibility = View.VISIBLE
         presenter.onViewLoaded()
     }
-
-    override fun loadView() {
-        TODO("Not yet implemented")
+    
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy()")
+        presenter.onViewDetached()
+        super.onDestroy()
     }
 
     override fun updateWelcomeMessage(userName: String) {
+        Log.d(TAG, "updateWelcomeMessage()")
         tvWelcomeUser.text = getString(R.string.welcome_user, userName)
     }
 
@@ -60,6 +66,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     }
 
     override fun showErrorMessage() {
+        Log.d(TAG, "showErrorMessage()")
         groupPortfolioViews.visibility = View.GONE
         tvErrorMessage.visibility = View.VISIBLE
     }

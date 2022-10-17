@@ -1,31 +1,43 @@
 package com.example.stocksapp
 
+import android.util.Log
 import com.example.stocksapp.Data.Stock
 
 class PortfolioPagePresenter(
-    private val portfolioPageView: PortfolioPageContract.View,
+    private var portfolioPageView: PortfolioPageContract.View?,
     private val model: PortfolioPageContract.Model
 ) : PortfolioPageContract.Presenter, PortfolioPageContract.Model.OnModelResponseListener {
 
     override fun onViewLoaded() {
+        Log.d(TAG, "showErrorMessage()")
         model.init(this)
         updateUserName()
         model.getPortfolio()
     }
 
-    //@TODO - rename
-    override fun onPortfolioResponse(listOfStocks: List<Stock>) {
-        portfolioPageView.updatePortfolio(listOfStocks)
+    override fun onViewDetached() {
+        Log.d(TAG, "onViewDetached()")
+        model.destroy()
+        portfolioPageView = null
     }
 
-    //@TODO - update error view
+    override fun onPortfolioResponse(listOfStocks: List<Stock>) {
+        Log.d(TAG, "onPortfolioResponse()")
+        portfolioPageView?.updatePortfolio(listOfStocks)
+    }
+
     override fun onPortfolioResponseError() {
-        portfolioPageView.showErrorMessage()
+        Log.d(TAG, "onPortfolioResponseError()")
+        portfolioPageView?.showErrorMessage()
     }
 
     private fun updateUserName() {
+        Log.d(TAG, "updateUserName()")
         val userName = model.getUserName()
-        portfolioPageView.updateWelcomeMessage(userName)
+        portfolioPageView?.updateWelcomeMessage(userName)
     }
 
+    companion object {
+        private const val TAG = "PortfolioPagePresenter"
+    }
 }

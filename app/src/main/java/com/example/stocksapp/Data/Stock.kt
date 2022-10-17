@@ -3,7 +3,6 @@ package com.example.stocksapp.Data
 import com.google.gson.annotations.SerializedName
 
 data class Stock(
-
     @SerializedName("ticker")
     val ticker: String,
     @SerializedName("name")

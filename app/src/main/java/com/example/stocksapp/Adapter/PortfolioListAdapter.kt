@@ -49,7 +49,6 @@ class PortfolioListAdapter(private val data: List<Stock>) :
             viewHolder.tvQuantity.text =
                 context.getString(R.string.quantity, stockItem.quantity.toString())
         }
-
     }
 
     override fun getItemCount(): Int = data.size
