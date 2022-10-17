@@ -21,6 +21,10 @@ class PortfolioPagePresenter(
         portfolioPageView = null
     }
 
+    override fun reloadPortfolio() {
+        model.getPortfolio()
+    }
+
     override fun onPortfolioResponse(listOfStocks: List<Stock>) {
         Log.d(TAG, "onPortfolioResponse()")
         portfolioPageView?.updatePortfolio(listOfStocks)

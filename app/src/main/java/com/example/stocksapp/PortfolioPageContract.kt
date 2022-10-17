@@ -12,6 +12,7 @@ interface PortfolioPageContract {
     interface Presenter {
         fun onViewLoaded()
         fun onViewDetached()
+        fun reloadPortfolio()
     }
 
     interface Model {

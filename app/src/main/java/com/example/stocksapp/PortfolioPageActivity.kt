@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.stocksapp.Adapter.PortfolioListAdapter
 import com.example.stocksapp.Data.Stock
 
@@ -19,6 +20,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var pbLoadingIcon: ProgressBar
     private lateinit var groupPortfolioViews: Group
     private lateinit var tvErrorMessage: TextView
+    private lateinit var srlReloadList: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +31,16 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
         pbLoadingIcon = findViewById(R.id.pb_loading_icon)
         groupPortfolioViews = findViewById(R.id.group_portfolio)
-        tvErrorMessage =
-            findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
+        tvErrorMessage = findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
+        srlReloadList = findViewById(R.id.srl_reload_list)
+        srlReloadList.setOnRefreshListener {
+            srlReloadList.isRefreshing = false
+            rvPortfolioList.removeAllViewsInLayout()
+            pbLoadingIcon.visibility = View.VISIBLE
+            presenter.reloadPortfolio()
+        }
     }
+
 
     override fun onResume() {
         super.onResume()

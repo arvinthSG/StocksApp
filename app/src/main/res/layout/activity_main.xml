@@ -11,7 +11,7 @@
         android:id="@+id/group_portfolio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tv_welcome_user,rv_portfolio_list,pb_loading_icon"
+        app:constraint_referenced_ids="tv_welcome_user,srl_reload_list,pb_loading_icon"
         tools:visibility="visible" />
 
     <TextView
@@ -43,15 +43,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_portfolio_list"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_reload_list"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/large"
-        android:layout_marginBottom="@dimen/large"
-        android:background="#999999"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_welcome_user" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_user">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_portfolio_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/large"
+            android:layout_marginBottom="@dimen/large"
+            android:background="@color/list_bg" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/pb_loading_icon"
