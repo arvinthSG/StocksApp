@@ -26,14 +26,16 @@ class PortfolioPageModel : PortfolioPageContract.Model {
     override fun getPortfolio() {
         Log.d(TAG, "getPortfolio()")
         compositeDisposable.add(
-            getStocksService.getPortfolio().subscribeOn(Schedulers.io()).subscribe({ it ->
-                it.let {
-                    onModelResponseListener.onPortfolioResponse(it.stocks)
+            getStocksService.getPortfolio()
+                .subscribeOn(Schedulers.io())
+                .subscribe({ it ->
+                    it.let {
+                        onModelResponseListener.onPortfolioResponse(it.stocks)
+                    }
+                }, {
+                    onModelResponseListener.onPortfolioResponseError()
                 }
-            }, {
-                onModelResponseListener.onPortfolioResponseError()
-            }
-            )
+                )
         )
     }
 
@@ -42,6 +44,7 @@ class PortfolioPageModel : PortfolioPageContract.Model {
         Log.d(TAG, "getMalformedPortfolio()")
         compositeDisposable.add(
             getStocksService.getMalformedPortfolio()
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     it.let {
                         onModelResponseListener.onPortfolioResponse(it.stocks)
@@ -58,17 +61,19 @@ class PortfolioPageModel : PortfolioPageContract.Model {
         Log.d(TAG, "getEmptyPortfolio()")
         compositeDisposable.add(
             getStocksService.getEmptyPortfolio()
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     it.let {
-                        onModelResponseListener.onPortfolioResponse(it.stocks)
+                        Log.d(TAG, "isEmpty ${it.stocks.size}")
+                        onModelResponseListener.onPortfolioEmptyResponese()
                     }
                 }, {
+                    Log.d(TAG, it.toString())
                     onModelResponseListener.onPortfolioResponseError()
                 }
                 )
         )
     }
-
 
     override fun getUserName() = USERNAME
 
@@ -77,7 +82,7 @@ class PortfolioPageModel : PortfolioPageContract.Model {
     }
 
     companion object {
-        private const val TAG = "HomepageModel"
+        private const val TAG = "PortfolioPageModel"
         private const val USERNAME = "Arvinthan"
     }
 }

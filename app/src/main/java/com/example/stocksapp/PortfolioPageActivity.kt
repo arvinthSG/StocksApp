@@ -20,6 +20,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var pbLoadingIcon: ProgressBar
     private lateinit var groupPortfolioViews: Group
     private lateinit var tvErrorMessage: TextView
+    private lateinit var tvEmptyMessage: TextView
     private lateinit var srlReloadList: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,24 +32,33 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
         pbLoadingIcon = findViewById(R.id.pb_loading_icon)
         groupPortfolioViews = findViewById(R.id.group_portfolio)
-        tvErrorMessage = findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
+        tvErrorMessage =
+            findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
+        tvEmptyMessage =
+            findViewById<TextView?>(R.id.tv_empty_message).apply { visibility = View.GONE }
         srlReloadList = findViewById(R.id.srl_reload_list)
         srlReloadList.setOnRefreshListener {
             srlReloadList.isRefreshing = false
             rvPortfolioList.removeAllViewsInLayout()
-            pbLoadingIcon.visibility = View.VISIBLE
             presenter.reloadPortfolio()
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        pbLoadingIcon.visibility = View.VISIBLE
+        presenter.onViewLoaded()
+    }
 
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume()")
-        pbLoadingIcon.visibility = View.VISIBLE
-        presenter.onViewLoaded()
     }
-    
+
+    override fun onStop() {
+        super.onStop()
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "onDestroy()")
         presenter.onViewDetached()
@@ -63,7 +73,9 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     override fun updatePortfolio(listOfStocks: List<Stock>) {
         runOnUiThread {
             tvErrorMessage.visibility = View.GONE
-            groupPortfolioViews.visibility = View.VISIBLE
+            tvEmptyMessage.visibility = View.GONE
+
+            rvPortfolioList.visibility = View.VISIBLE
             pbLoadingIcon.visibility = View.GONE
             Thread.sleep(1000) // Added to show the loading icon
             rvPortfolioList.apply {
@@ -76,8 +88,21 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun showErrorMessage() {
         Log.d(TAG, "showErrorMessage()")
-        groupPortfolioViews.visibility = View.GONE
-        tvErrorMessage.visibility = View.VISIBLE
+        runOnUiThread {
+            groupPortfolioViews.visibility = View.GONE
+            tvErrorMessage.visibility = View.VISIBLE
+        }
+
+    }
+
+    override fun showEmptyMessage() {
+        Log.d(TAG, "showEmptyMessage()")
+        runOnUiThread {
+            rvPortfolioList.visibility = View.GONE
+            tvEmptyMessage.visibility = View.VISIBLE
+            pbLoadingIcon.visibility = View.GONE
+        }
+
     }
 
     companion object {

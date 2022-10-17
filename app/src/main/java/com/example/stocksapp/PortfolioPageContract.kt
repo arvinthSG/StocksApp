@@ -7,6 +7,7 @@ interface PortfolioPageContract {
         fun updateWelcomeMessage(userName: String)
         fun updatePortfolio(listOfStocks: List<Stock>)
         fun showErrorMessage()
+        fun showEmptyMessage()
     }
 
     interface Presenter {
@@ -26,6 +27,7 @@ interface PortfolioPageContract {
         interface OnModelResponseListener {
             fun onPortfolioResponse(listOfStocks: List<Stock>)
             fun onPortfolioResponseError()
+            fun onPortfolioEmptyResponese()
         }
     }
 }

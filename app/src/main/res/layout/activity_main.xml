@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_welcome_user"
@@ -43,6 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_reload_list"
         android:layout_width="0dp"
@@ -52,14 +53,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_welcome_user">
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_user"
+        tools:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_portfolio_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/list_bg" />
+            android:background="@color/list_bg"
+            tools:visibility="gone" />
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_empty_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/extra_large"
+        android:layout_marginTop="@dimen/extra_large"
+        android:elevation="@dimen/large"
+        android:text="@string/empty_message"
+        android:textColor="@color/home_text"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_user"
+        tools:text="empty message"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/pb_loading_icon"
@@ -69,5 +89,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

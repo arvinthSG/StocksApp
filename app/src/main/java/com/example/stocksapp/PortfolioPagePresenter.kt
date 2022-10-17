@@ -1,6 +1,7 @@
 package com.example.stocksapp
 
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import com.example.stocksapp.Data.Stock
 
 class PortfolioPagePresenter(
@@ -9,10 +10,10 @@ class PortfolioPagePresenter(
 ) : PortfolioPageContract.Presenter, PortfolioPageContract.Model.OnModelResponseListener {
 
     override fun onViewLoaded() {
-        Log.d(TAG, "showErrorMessage()")
+        Log.d(TAG, "onViewLoaded()")
         model.init(this)
         updateUserName()
-        model.getPortfolio()
+        model.getEmptyPortfolio()
     }
 
     override fun onViewDetached() {
@@ -26,7 +27,7 @@ class PortfolioPagePresenter(
     }
 
     override fun onPortfolioResponse(listOfStocks: List<Stock>) {
-        Log.d(TAG, "onPortfolioResponse()")
+        Log.d(TAG, "onPortfolioResponse() ${listOfStocks.size}")
         portfolioPageView?.updatePortfolio(listOfStocks)
     }
 
@@ -35,7 +36,12 @@ class PortfolioPagePresenter(
         portfolioPageView?.showErrorMessage()
     }
 
-    private fun updateUserName() {
+    override fun onPortfolioEmptyResponese() {
+        portfolioPageView?.showEmptyMessage()
+    }
+
+    @VisibleForTesting
+    fun updateUserName() {
         Log.d(TAG, "updateUserName()")
         val userName = model.getUserName()
         portfolioPageView?.updateWelcomeMessage(userName)
