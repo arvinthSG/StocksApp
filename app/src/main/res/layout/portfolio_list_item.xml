@@ -27,6 +27,7 @@
         android:layout_margin="@dimen/regular"
         android:layout_marginEnd="@dimen/extra_large"
         android:textColor="@color/home_text"
+        android:textSize="@dimen/text_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_currency_price"
         tools:text="vanguard vti index funds" />
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/regular"
         android:textColor="@color/home_text"
+        android:textSize="@dimen/text_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_stock_name"
         tools:text="5" />

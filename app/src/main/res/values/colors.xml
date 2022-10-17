@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="home_bg">#009088</color>
-    <color name="home_text">#FFFFFFFF</color>
+    <color name="home_bg">#41445c</color>
+    <color name="home_text">#FFFFFF</color>
     <color name="error">#DD0000</color>
     <color name="list_bg">#999999</color>
 </resources>
