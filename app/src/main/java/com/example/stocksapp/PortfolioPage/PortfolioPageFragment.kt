@@ -1,19 +1,33 @@
-package com.example.stocksapp
+package com.example.stocksapp.PortfolioPage
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.stocksapp.Adapter.PortfolioListAdapter
 import com.example.stocksapp.Data.Stock
+import com.example.stocksapp.R
 
-class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [PortfolioPageFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
+
     private lateinit var tvWelcomeUser: TextView
     private lateinit var rvPortfolioList: RecyclerView
     private lateinit var presenter: PortfolioPagePresenter
@@ -23,36 +37,44 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     private lateinit var tvEmptyMessage: TextView
     private lateinit var srlReloadList: SwipeRefreshLayout
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate()")
-        setContentView(R.layout.activity_main)
-        tvWelcomeUser = findViewById(R.id.tv_welcome_user)
-        rvPortfolioList = findViewById(R.id.rv_portfolio_list)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_main, container, false)
+        tvWelcomeUser = view.findViewById(R.id.tv_welcome_user)
+        rvPortfolioList = view.findViewById(R.id.rv_portfolio_list)
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
-        pbLoadingIcon = findViewById(R.id.pb_loading_icon)
-        groupPortfolioViews = findViewById(R.id.group_portfolio)
+        pbLoadingIcon = view.findViewById(R.id.pb_loading_icon)
+        groupPortfolioViews = view.findViewById(R.id.group_portfolio)
         tvErrorMessage =
-            findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
+            view.findViewById<TextView?>(R.id.tv_error_message).apply { visibility = View.GONE }
         tvEmptyMessage =
-            findViewById<TextView?>(R.id.tv_empty_message).apply { visibility = View.GONE }
-        srlReloadList = findViewById(R.id.srl_reload_list)
+            view.findViewById<TextView?>(R.id.tv_empty_message).apply { visibility = View.GONE }
+        srlReloadList = view.findViewById(R.id.srl_reload_list)
         srlReloadList.setOnRefreshListener {
             srlReloadList.isRefreshing = false
             rvPortfolioList.removeAllViewsInLayout()
             presenter.reloadPortfolio()
         }
+        return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate()")
     }
 
     override fun onStart() {
         super.onStart()
-        pbLoadingIcon.visibility = View.VISIBLE
-        presenter.onViewLoaded()
     }
+
 
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume()")
+        pbLoadingIcon.visibility = View.VISIBLE
+        presenter.onViewLoaded()
     }
 
     override fun onStop() {
@@ -71,13 +93,13 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
     }
 
     override fun updatePortfolio(listOfStocks: List<Stock>) {
-        runOnUiThread {
+        activity?.runOnUiThread {
             tvErrorMessage.visibility = View.GONE
             tvEmptyMessage.visibility = View.GONE
 
             rvPortfolioList.visibility = View.VISIBLE
             pbLoadingIcon.visibility = View.GONE
-            Thread.sleep(1000) // Added to show the loading icon
+            Thread.sleep(SLEEP_TIMER) // Added to show the loading icon
             rvPortfolioList.apply {
                 setHasFixedSize(true)
                 layoutManager = GridLayoutManager(context, 2)
@@ -88,7 +110,7 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun showErrorMessage() {
         Log.d(TAG, "showErrorMessage()")
-        runOnUiThread {
+        activity?.runOnUiThread {
             groupPortfolioViews.visibility = View.GONE
             tvErrorMessage.visibility = View.VISIBLE
         }
@@ -97,15 +119,23 @@ class PortfolioPageActivity : AppCompatActivity(), PortfolioPageContract.View {
 
     override fun showEmptyMessage() {
         Log.d(TAG, "showEmptyMessage()")
-        runOnUiThread {
+        activity?.runOnUiThread {
             rvPortfolioList.visibility = View.GONE
             tvEmptyMessage.visibility = View.VISIBLE
             pbLoadingIcon.visibility = View.GONE
         }
-
     }
 
     companion object {
-        private const val TAG = "HomepageActivity"
+        /**
+         * Better way to init a fragment.
+         * If the activity has some arguments to be passed to the fragment we can make
+         * use this type of instantiation
+         */
+        @JvmStatic
+        fun newInstance() = PortfolioPageFragment()
+
+        const val TAG = "HomepageActivity"
+        private const val SLEEP_TIMER = 1000L
     }
 }

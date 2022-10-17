@@ -5,4 +5,6 @@
     <string name="quantity">Quantity: %s</string>
     <string name="test_string">Test String</string>
     <string name="welcome_user">Welcome %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

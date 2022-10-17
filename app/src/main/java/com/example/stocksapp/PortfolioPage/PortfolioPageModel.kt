@@ -1,7 +1,7 @@
-package com.example.stocksapp
+package com.example.stocksapp.PortfolioPage
 
 import android.util.Log
-import com.example.stocksapp.PortfolioPageContract.Model.OnModelResponseListener
+import com.example.stocksapp.PortfolioPage.PortfolioPageContract.Model.OnModelResponseListener
 import com.example.stocksapp.Network.GetStocksService
 import com.example.stocksapp.Network.StocksAppNetworkInstance
 import io.reactivex.disposables.CompositeDisposable
@@ -30,7 +30,11 @@ class PortfolioPageModel : PortfolioPageContract.Model {
                 .subscribeOn(Schedulers.io())
                 .subscribe({ it ->
                     it.let {
-                        onModelResponseListener.onPortfolioResponse(it.stocks)
+                        if(it.stocks.isEmpty()) {
+                            onModelResponseListener.onPortfolioEmptyResponse()
+                        } else {
+                            onModelResponseListener.onPortfolioResponse(it.stocks)
+                        }
                     }
                 }, {
                     onModelResponseListener.onPortfolioResponseError()
@@ -65,7 +69,7 @@ class PortfolioPageModel : PortfolioPageContract.Model {
                 .subscribe({
                     it.let {
                         Log.d(TAG, "isEmpty ${it.stocks.size}")
-                        onModelResponseListener.onPortfolioEmptyResponese()
+                        onModelResponseListener.onPortfolioEmptyResponse()
                     }
                 }, {
                     Log.d(TAG, it.toString())

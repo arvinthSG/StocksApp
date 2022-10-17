@@ -1,4 +1,4 @@
-package com.example.stocksapp
+package com.example.stocksapp.PortfolioPage
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
@@ -13,7 +13,7 @@ class PortfolioPagePresenter(
         Log.d(TAG, "onViewLoaded()")
         model.init(this)
         updateUserName()
-        model.getEmptyPortfolio()
+        model.getPortfolio()
     }
 
     override fun onViewDetached() {
@@ -36,7 +36,7 @@ class PortfolioPagePresenter(
         portfolioPageView?.showErrorMessage()
     }
 
-    override fun onPortfolioEmptyResponese() {
+    override fun onPortfolioEmptyResponse() {
         portfolioPageView?.showEmptyMessage()
     }
 

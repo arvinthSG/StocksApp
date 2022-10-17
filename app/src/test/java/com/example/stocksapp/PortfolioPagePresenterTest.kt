@@ -1,6 +1,9 @@
 package com.example.stocksapp
 
 import com.example.stocksapp.Data.Stock
+import com.example.stocksapp.PortfolioPage.PortfolioPageContract
+import com.example.stocksapp.PortfolioPage.PortfolioPageModel
+import com.example.stocksapp.PortfolioPage.PortfolioPagePresenter
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -53,7 +56,7 @@ class PortfolioPagePresenterTest {
 
     @Test
     fun `assert that onPortFolioEmptyResponse calls view showEmptyMessage`() {
-        presenter.onPortfolioEmptyResponese()
+        presenter.onPortfolioEmptyResponse()
 
         verify(view).showEmptyMessage()
     }

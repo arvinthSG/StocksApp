@@ -1,4 +1,4 @@
-package com.example.stocksapp
+package com.example.stocksapp.PortfolioPage
 
 import com.example.stocksapp.Data.Stock
 
@@ -27,7 +27,7 @@ interface PortfolioPageContract {
         interface OnModelResponseListener {
             fun onPortfolioResponse(listOfStocks: List<Stock>)
             fun onPortfolioResponseError()
-            fun onPortfolioEmptyResponese()
+            fun onPortfolioEmptyResponse()
         }
     }
 }
