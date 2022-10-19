@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--    added color-->
     <color name="home_bg">#41445c</color>
     <color name="home_text">#FFFFFF</color>
     <color name="error">#DD0000</color>

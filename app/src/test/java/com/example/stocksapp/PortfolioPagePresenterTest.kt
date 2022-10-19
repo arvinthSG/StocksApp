@@ -2,6 +2,7 @@ package com.example.stocksapp
 
 import com.example.stocksapp.Data.Stock
 import com.example.stocksapp.PortfolioPage.PortfolioPageContract
+import com.example.stocksapp.PortfolioPage.PortfolioPageFragment
 import com.example.stocksapp.PortfolioPage.PortfolioPageModel
 import com.example.stocksapp.PortfolioPage.PortfolioPagePresenter
 import org.junit.Before
@@ -19,7 +20,7 @@ class PortfolioPagePresenterTest {
 
     @Before
     fun onSetup() {
-        view = mock(PortfolioPageActivity::class.java)
+        view = mock(PortfolioPageFragment::class.java)
         model = mock(PortfolioPageModel::class.java)
         presenter = PortfolioPagePresenter(view, model)
     }
@@ -29,7 +30,7 @@ class PortfolioPagePresenterTest {
         presenter.onViewLoaded()
 
         verify(model).init(presenter)
-        verify(model).getEmptyPortfolio()
+        verify(model).getPortfolio()
     }
 
     @Test

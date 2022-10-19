@@ -6,6 +6,7 @@ import com.example.stocksapp.Network.GetStocksService
 import com.example.stocksapp.Network.StocksAppNetworkInstance
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
 import retrofit2.Retrofit
 
 class PortfolioPageModel : PortfolioPageContract.Model {
@@ -28,9 +29,10 @@ class PortfolioPageModel : PortfolioPageContract.Model {
         compositeDisposable.add(
             getStocksService.getPortfolio()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     it.let {
-                        if(it.stocks.isEmpty()) {
+                        if (it.stocks.isEmpty()) {
                             onModelResponseListener.onPortfolioEmptyResponse()
                         } else {
                             onModelResponseListener.onPortfolioResponse(it.stocks)
@@ -49,6 +51,7 @@ class PortfolioPageModel : PortfolioPageContract.Model {
         compositeDisposable.add(
             getStocksService.getMalformedPortfolio()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.let {
                         onModelResponseListener.onPortfolioResponse(it.stocks)
@@ -66,6 +69,7 @@ class PortfolioPageModel : PortfolioPageContract.Model {
         compositeDisposable.add(
             getStocksService.getEmptyPortfolio()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.let {
                         Log.d(TAG, "isEmpty ${it.stocks.size}")

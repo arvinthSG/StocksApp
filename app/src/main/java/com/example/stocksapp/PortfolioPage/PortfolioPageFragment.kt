@@ -16,16 +16,6 @@ import com.example.stocksapp.Adapter.PortfolioListAdapter
 import com.example.stocksapp.Data.Stock
 import com.example.stocksapp.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PortfolioPageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
 
     private lateinit var tvWelcomeUser: TextView
@@ -41,7 +31,7 @@ class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_main, container, false)
+        val view = inflater.inflate(R.layout.portfolio_page_view, container, false)
         tvWelcomeUser = view.findViewById(R.id.tv_welcome_user)
         rvPortfolioList = view.findViewById(R.id.rv_portfolio_list)
         presenter = PortfolioPagePresenter(this, PortfolioPageModel())
@@ -93,20 +83,20 @@ class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
     }
 
     override fun updatePortfolio(listOfStocks: List<Stock>) {
-        activity?.runOnUiThread {
-            tvErrorMessage.visibility = View.GONE
-            tvEmptyMessage.visibility = View.GONE
 
-            rvPortfolioList.visibility = View.VISIBLE
-            pbLoadingIcon.visibility = View.GONE
-            Thread.sleep(SLEEP_TIMER) // Added to show the loading icon
-            rvPortfolioList.apply {
-                setHasFixedSize(true)
-                layoutManager = GridLayoutManager(context, 2)
-                adapter = PortfolioListAdapter(listOfStocks)
-            }
+        tvErrorMessage.visibility = View.GONE
+        tvEmptyMessage.visibility = View.GONE
+
+        rvPortfolioList.visibility = View.VISIBLE
+        pbLoadingIcon.visibility = View.GONE
+        Thread.sleep(SLEEP_TIMER) // Added to show the loading icon
+        rvPortfolioList.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = PortfolioListAdapter(listOfStocks)
         }
     }
+
 
     override fun showErrorMessage() {
         Log.d(TAG, "showErrorMessage()")
@@ -119,11 +109,9 @@ class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
 
     override fun showEmptyMessage() {
         Log.d(TAG, "showEmptyMessage()")
-        activity?.runOnUiThread {
             rvPortfolioList.visibility = View.GONE
             tvEmptyMessage.visibility = View.VISIBLE
             pbLoadingIcon.visibility = View.GONE
-        }
     }
 
     companion object {
@@ -135,7 +123,7 @@ class PortfolioPageFragment : Fragment(), PortfolioPageContract.View {
         @JvmStatic
         fun newInstance() = PortfolioPageFragment()
 
-        const val TAG = "HomepageActivity"
+        const val TAG = "PortfolioPageFragment"
         private const val SLEEP_TIMER = 1000L
     }
 }
